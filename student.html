@@ -51,14 +51,12 @@
             color: #4F46E5; 
         }
         
-        /* [문제 해결 1] PDF 캡처 전용 모드 스타일 최적화 */
         .pdf-capture-mode .gradient-text {
             background: none !important;
             -webkit-text-fill-color: #4F46E5 !important;
             color: #4F46E5 !important;
         }
         
-        /* [문제 해결 2] 버튼 및 로딩 UI 강제 숨김 처리 */
         .pdf-capture-mode .no-pdf {
             display: none !important;
             visibility: hidden !important;
@@ -109,7 +107,6 @@
                         취업 전, 가장 저렴한 비용으로 평생의 든든함을 구독하세요.
                     </p>
                     
-                    <!-- [문제 해결 3] 버튼에 no-pdf 클래스 확인 -->
                     <div class="mt-12 flex flex-wrap gap-4 no-pdf">
                         <button id="download-btn" onclick="exportToPDF()" class="bg-white text-brand-dark font-bold py-4 px-8 rounded-2xl shadow-xl hover:bg-brand-blue hover:text-white transition-all flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -140,7 +137,7 @@
         <div class="pdf-page pdf-page-break py-24">
             <main class="max-w-6xl mx-auto px-16 space-y-28">
                 
-                <!-- Visualization: Timing is Everything -->
+                <!-- Visualization -->
                 <section class="bg-white p-12 rounded-[40px] shadow-2xl border border-slate-100 flex flex-col lg:flex-row items-center gap-16">
                     <div class="lg:w-1/2">
                         <h3 class="text-3xl font-black text-brand-dark mb-6 tracking-tight">지금 시작해야 하는 이유:<br><span class="text-brand-blue">시간의 레버리지</span></h3>
@@ -277,10 +274,6 @@
                         <p class="text-brand-mint font-bold text-sm">${item.desc}</p>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed mt-4 flex-grow">${item.detail}</p>
-                    <div class="mt-8 pt-6 border-t border-slate-50 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-tighter">
-                        상담하기 
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </div>
                 </div>
             `;
         });
@@ -337,8 +330,6 @@
             
             btn.disabled = true;
             btn.innerText = "리포트 로딩 중...";
-
-            // 해결책 1: 캡처 전용 모드 활성화 (텍스트 색상 고정 및 버튼 숨김)
             captureArea.classList.add('pdf-capture-mode');
 
             try {
@@ -347,14 +338,12 @@
                 const pages = document.querySelectorAll('.pdf-page');
 
                 for (let i = 0; i < pages.length; i++) {
-                    // 해결책 2: html2canvas 렌더링 옵션 보강 (글자 가림 현상 방지)
                     const canvas = await html2canvas(pages[i], {
                         scale: 2,
                         useCORS: true,
                         logging: false,
                         width: 1200,
                         backgroundColor: '#F8FAFC',
-                        // 텍스트 숨김 요소 제외 강제 적용
                         ignoreElements: (el) => el.classList.contains('no-pdf')
                     });
 
@@ -369,9 +358,7 @@
                 doc.save('GenZ_Start-up_Strategy_Report.pdf');
             } catch (error) {
                 console.error("PDF Export Error:", error);
-                alert("리포트를 만드는 도중 오류가 발생했습니다.");
             } finally {
-                // 원상복구
                 captureArea.classList.remove('pdf-capture-mode');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
