@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Insight: 대표의 마음을 움직이는 '원함'의 지도</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', 'serif'],
+                    },
+                    colors: {
+                        navy: {
+                            50: '#f0f4f8',
+                            100: '#d9e2ec',
+                            800: '#102a43',
+                            900: '#061626',
+                        },
+                        gold: {
+                            600: '#c5a059',
+                            700: '#b08d4a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f7f9fb;
+            color: #102a43;
+            scroll-behavior: smooth;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            height: 400px;
+        }
+        .strategy-card {
+            border-left: 5px solid #c5a059;
+        }
+        .strategy-box {
+            background-color: #102a43;
+            color: #ffffff;
+        }
+        
+        /* PDF 인쇄 시 페이지 분할을 위한 스타일 */
+        .pdf-page {
+            width: 1200px;
+            margin: 0 auto;
+            background-color: #f7f9fb;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        #download-btn {
+            transition: all 0.3s ease;
+        }
+        #download-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 화면에서는 자연스럽게 연결되도록 보임 */
+        @media screen {
+            .pdf-page-break {
+                border-top: 2px dashed #d1d5db;
+                margin-top: 4rem;
+                padding-top: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans flex flex-col min-h-screen">
+
+    <div id="capture-area">
+        <!-- [PAGE 1] -->
+        <div class="pdf-page pb-20">
+            <!-- Header Section -->
+            <header class="w-full bg-navy-900 text-white py-24 px-12 border-b-4 border-gold-600 relative">
+                <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div>
+                        <h2 class="text-gold-600 font-bold tracking-[0.2em] text-sm uppercase mb-4">Insurance-Driven Solution</h2>
+                        <h1 class="text-4xl md:text-6xl font-serif font-bold leading-tight mb-8">대표의 숨은 욕망을 해결하는<br><span class="text-gold-600">보험 전략의 모든 것</span></h1>
+                        <p class="text-navy-100 text-lg md:text-xl font-light max-w-3xl leading-relaxed">
+                            보험은 단순한 '비용'이 아니라 대표님의 '주권'을 지키는 가장 강력한 금융 자산입니다. <br>
+                            말하지 못한 고민을 보험이라는 정교한 장치로 해결해 드립니다.
+                        </p>
+                    </div>
+                    <button id="download-btn" onclick="exportToPDF()" class="bg-gold-600 hover:bg-gold-700 text-navy-900 font-bold py-3 px-6 rounded-full shadow-lg flex items-center gap-2 mb-2 no-pdf">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                        PDF 보고서 다운로드
+                    </button>
+                </div>
+            </header>
+
+            <main class="max-w-6xl mx-auto px-12 pt-16">
+                <section>
+                    <div class="mb-12 border-b border-navy-100 pb-6">
+                        <h2 class="text-3xl font-serif font-bold text-navy-900">01. 분야별 핵심 전략 지도 (Full Map)</h2>
+                        <p class="text-slate-600 mt-2 italic">말하지 않아도 통하는 대표님만을 위한 4가지 경영 보호막입니다.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="strategy-display-container">
+                        <!-- Data injected by JS -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- [PAGE 2] -->
+        <div class="pdf-page pdf-page-break py-20">
+            <main class="max-w-6xl mx-auto px-12 space-y-28">
+                <!-- Visual Comparison (Radar Chart) -->
+                <section class="bg-white p-10 rounded-3xl shadow-xl border border-navy-100">
+                    <div class="flex flex-col md:flex-row items-center gap-12">
+                        <div class="md:w-1/2">
+                            <h2 class="text-3xl font-serif font-bold text-navy-900 mb-6">위기 대응의 압도적 차이</h2>
+                            <p class="text-slate-600 leading-relaxed mb-6 text-lg">
+                                일반 현금 적립 방식은 위기가 닥칠 때 그 자산만큼만 방어할 수 있습니다. <br><br>
+                                하지만 <strong>보험 솔루션</strong>은 납입한 금액을 압도하는 <strong>즉각적인 레버리지를 발생</strong>시켜 기업 가치와 리더의 명예를 훼손 없이 보존합니다.
+                            </p>
+                        </div>
+                        <div class="md:w-1/2 chart-container">
+                            <canvas id="solutionChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Professional Pillars -->
+                <section>
+                    <div class="mb-12">
+                        <h2 class="text-3xl font-serif font-bold text-navy-900">02. 보험으로 완성하는 세 가지 주권</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Pillar 1 -->
+                        <div class="bg-navy-50 p-8 rounded-2xl border border-navy-100">
+                            <div class="text-gold-600 text-sm font-bold mb-4 uppercase tracking-widest">Protection</div>
+                            <h3 class="text-xl font-bold text-navy-900 mb-4">경영 연속성 주권</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">부재 시 발생하는 긴급 채무 상환 및 가산세를 막아 기업이 멈추지 않게 합니다.</p>
+                            <ul class="space-y-3 text-xs font-bold text-navy-800">
+                                <li>● 즉각적인 유동성 확보</li>
+                                <li>● 법인세 절감 (비용 처리)</li>
+                            </ul>
+                        </div>
+                        <!-- Pillar 2 -->
+                        <div class="bg-navy-50 p-8 rounded-2xl border border-navy-100">
+                            <div class="text-gold-600 text-sm font-bold mb-4 uppercase tracking-widest">Legacy</div>
+                            <h3 class="text-xl font-bold text-navy-900 mb-4">가문 보존 주권</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">세금 때문에 가족이 기업을 포기하지 않도록 '납세 재원'을 미리 현금화해 둡니다.</p>
+                            <ul class="space-y-3 text-xs font-bold text-navy-800">
+                                <li>● 상속세 현금화 전략</li>
+                                <li>● 주식 가치 평가 관리</li>
+                            </ul>
+                        </div>
+                        <!-- Pillar 3 -->
+                        <div class="bg-navy-50 p-8 rounded-2xl border border-navy-100">
+                            <div class="text-gold-600 text-sm font-bold mb-4 uppercase tracking-widest">Authority</div>
+                            <h3 class="text-xl font-bold text-navy-900 mb-4">명예로운 엑시트 주권</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-6">떠날 때의 모습이 곧 명예입니다. 합법적이고 품격 있는 퇴직 자금을 마련합니다.</p>
+                            <ul class="space-y-3 text-xs font-bold text-navy-800">
+                                <li>● 퇴직금 규정 정비 연계</li>
+                                <li>● 평생 연금 소득 구조</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer Inside Page 2 -->
+            <footer class="bg-navy-900 text-white py-16 px-12 mt-28">
+                <div class="max-w-4xl mx-auto text-center mb-12">
+                    <h3 class="text-2xl font-serif mb-6 text-gold-600">"대표님의 평생이 헛되지 않도록"</h3>
+                    <p class="text-navy-100 text-sm opacity-70 mb-8 leading-relaxed">
+                        우리는 단순히 상품을 파는 사람이 아닙니다. <br>
+                        대표님의 삶을 이해하고, 그 가치를 영원히 보존하는 전략적 파트너입니다.
+                    </p>
+                </div>
+
+                <!-- Added Business Card Section -->
+                <div class="max-w-[1000px] mx-auto flex flex-row justify-between items-center bg-white rounded-2xl p-8 shadow-2xl">
+                    <div class="flex items-center gap-6">
+                        <div class="w-16 h-16 bg-white border border-slate-100 rounded-xl flex items-center justify-center p-1 shadow-sm overflow-hidden">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmws.samsunglife.com%3A8440%2F%23%2Fmain%2Fbc%2FTSSBC500M%3Fmdigitkey%3D0002221232" 
+                                 alt="QR" class="w-full h-full object-contain">
+                        </div>
+                        <div class="space-y-1 text-left">
+                            <p class="text-[9px] text-blue-600 font-black tracking-widest uppercase">PRIVATE WEALTH CONSULTANT</p>
+                            <div class="flex items-center gap-3">
+                                <h3 class="text-2xl font-black text-slate-900 leading-none">최세림</h3>
+                                <span class="px-2 py-0.5 bg-slate-100 text-slate-500 text-[9px] font-bold rounded">PLANNER</span>
+                            </div>
+                            <p class="text-lg font-black text-slate-700 tracking-tight">010-7526-1826</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-right border-l-2 border-slate-100 pl-6 hidden sm:block">
+                        <p class="text-[10px] font-black text-slate-900 tracking-widest mb-1 uppercase">PROFESSIONAL INTEGRITY</p>
+                        <p class="text-[11px] text-slate-500 font-medium leading-snug">
+                            풍부한 데이터 기반의 분석으로<br>
+                            <span class="text-slate-800 font-bold">당신만의 견고한 미래</span>를 설계합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-12 text-center pt-8 border-t border-navy-800 text-[10px] uppercase tracking-[0.3em] font-bold text-white/50">
+                    Elite Executive Solution &copy; 2026
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const strategicData = [
+            {
+                category: '의사결정 주권',
+                want: '후회 없는 선택과 집중',
+                need: '리스크 데이터 분석',
+                solution: '경영인 보장 플랜 (CEO Risk Transfer)',
+                strategy: '대표님의 유고 또는 사고 시, 기업이 즉시 가용할 수 있는 수십 억 대의 현금을 확보하여 의사결정의 공백을 자본으로 메웁니다.'
+            },
+            {
+                category: '승계 및 영속성',
+                want: '상징적인 불멸성',
+                need: '상속세 재원 마련',
+                solution: '가업 승계 전용 신탁 보험',
+                strategy: '기업의 주식 가치가 오를수록 커지는 상속세 부담을 보험금으로 완벽히 상쇄하여, 가족의 상속 포기 사태를 원천 차단합니다.'
+            },
+            {
+                category: '시간의 가치',
+                need: '업무 효율성 증대',
+                want: '인지적 자유 (Focus)',
+                solution: '임직원 복지형 단체 보험',
+                strategy: '재해, 질병, 배상 책임을 보험으로 전가하여 대표님의 관리 스팬을 획기적으로 축소하고 본업에 몰입하게 합니다.'
+            },
+            {
+                category: '조직 통제력',
+                need: '핵심 인재 이탈 방지',
+                want: '진정한 권위와 존경',
+                solution: 'Key-man 보상 및 연금 설계',
+                strategy: '핵심 인력의 퇴직금을 보험으로 적립해주되 수급권을 대표님이 조절함으로써 인재가 떠나지 못하는 강력한 체계를 구축합니다.'
+            }
+        ];
+
+        const container = document.getElementById('strategy-display-container');
+        strategicData.forEach(item => {
+            container.innerHTML += `
+                <div class="strategy-card bg-white p-8 rounded-2xl shadow-sm border border-navy-100 flex flex-col h-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-gold-700 font-bold text-xs uppercase tracking-widest">${item.category}</span>
+                        <div class="w-8 h-1 bg-gold-600 rounded"></div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-[11px] text-navy-800 opacity-60 uppercase font-bold mb-1">Hidden Want</p>
+                        <h3 class="text-2xl font-serif font-bold text-navy-900 leading-tight">"${item.want}"</h3>
+                    </div>
+                    <div class="mb-6">
+                        <p class="text-[11px] text-navy-800 opacity-60 uppercase font-bold mb-1">Stated Need</p>
+                        <p class="text-slate-700 font-medium">${item.need}</p>
+                    </div>
+                    <div class="strategy-box p-5 rounded-xl mt-auto">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-gold-600 text-navy-900 text-[10px] font-black px-2 py-0.5 rounded">SOLUTION</span>
+                            <span class="text-gold-600 font-bold text-sm">${item.solution}</span>
+                        </div>
+                        <p class="text-navy-100 text-sm leading-relaxed">${item.strategy}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        function initChart() {
+            const ctx = document.getElementById('solutionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['유동성', '절세효과', '경영방어', '가족보호', '은퇴자금'],
+                    datasets: [{
+                        label: '보험 전략 솔루션',
+                        data: [95, 90, 85, 100, 95],
+                        backgroundColor: 'rgba(197, 160, 89, 0.4)',
+                        borderColor: '#c5a059',
+                        pointBackgroundColor: '#102a43',
+                        borderWidth: 3
+                    }, {
+                        label: '일반 자산 축적',
+                        data: [40, 20, 50, 30, 60],
+                        backgroundColor: 'rgba(51, 78, 104, 0.1)',
+                        borderColor: '#334e68',
+                        pointBackgroundColor: '#334e68',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    animation: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e7e5e4' },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { display: false },
+                            pointLabels: { font: { family: 'Noto Sans KR', size: 14, weight: 'bold' }, color: '#102a43' }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Noto Sans KR', size: 12 } } }
+                    }
+                }
+            });
+        }
+
+        async function exportToPDF() {
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerText = "페이지 생성 중...";
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const pages = document.querySelectorAll('.pdf-page');
+
+                for (let i = 0; i < pages.length; i++) {
+                    const canvas = await html2canvas(pages[i], {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        width: 1200,
+                        onclone: (clonedDoc) => {
+                            const btnInClone = clonedDoc.getElementById('download-btn');
+                            if (btnInClone) btnInClone.style.display = 'none';
+                        }
+                    });
+
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = 210;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                    if (i > 0) doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                }
+
+                doc.save('Executive_Insurance_Strategy_Report.pdf');
+            } catch (error) {
+                console.error("PDF Export Error:", error);
+                alert("PDF 생성 중 오류가 발생했습니다.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        window.onload = initChart;
+    </script>
+</body>
+</html>
