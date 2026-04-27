@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Guard & Growth: 소상공인 성공 안심 리포트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- PDF 생성 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Pretendard', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#2563EB',
+                            emerald: '#059669',
+                            slate: '#1E293B',
+                            amber: '#D97706'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            word-break: keep-all;
+        }
+        .step-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 0px solid #2563EB;
+        }
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            border-left-width: 8px;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #2563EB, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #2563EB; 
+        }
+        
+        /* PDF 캡처 최적화 */
+        .pdf-capture-mode .gradient-text {
+            background: none !important;
+            -webkit-text-fill-color: #2563EB !important;
+            color: #2563EB !important;
+        }
+        
+        .pdf-capture-mode .no-pdf {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 380px;
+            width: 100%;
+        }
+        .pdf-page {
+            width: 1200px;
+            margin: 0 auto;
+            background-color: #F8FAFC;
+            position: relative;
+            box-sizing: border-box;
+        }
+        @media screen {
+            .pdf-page-break {
+                margin-top: 4rem;
+                padding-top: 4rem;
+                border-top: 1px dashed #CBD5E1;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="capture-area">
+        <!-- [PAGE 1] -->
+        <div class="pdf-page pb-24">
+            <!-- Hero Header -->
+            <header class="w-full bg-brand-slate text-white pt-32 pb-24 px-16 rounded-b-[60px] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-brand-blue blur-[150px] opacity-20"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-emerald blur-[150px] opacity-10"></div>
+                
+                <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="inline-block px-4 py-1 rounded-full bg-white/10 text-white text-xs font-bold tracking-[0.2em] mb-8 uppercase border border-white/20">
+                        SME Sustainability & Risk Report
+                    </div>
+                    <h1 class="text-6xl md:text-8xl font-black mb-10 leading-none tracking-tight">
+                        PROTECT<br>
+                        <span class="gradient-text">YOUR DREAM</span>
+                    </h1>
+                    <p class="text-slate-400 text-xl md:text-2xl font-light max-w-3xl leading-relaxed">
+                        사장님의 땀으로 일군 소중한 사업장,<br>
+                        어떤 불확실성에도 흔들리지 않도록 <strong>안전한 성장 엔진</strong>을 장착해 드립니다.
+                    </p>
+                    
+                    <div class="mt-12 flex flex-wrap gap-4 no-pdf">
+                        <button id="download-btn" onclick="exportToPDF()" class="bg-white text-brand-slate font-bold py-4 px-10 rounded-2xl shadow-2xl hover:bg-brand-blue hover:text-white transition-all flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            경영 전략 리포트 PDF 저장
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="max-w-6xl mx-auto px-16 pt-24">
+                <section>
+                    <div class="mb-16">
+                        <h2 class="text-4xl font-black text-brand-slate mb-4 tracking-tight">01. 사장님을 위한 4대 비즈니스 안전망</h2>
+                        <p class="text-slate-500 text-lg">사업장 운영부터 가계 경제까지 원스톱으로 관리해야 합니다.</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="strategy-display-container">
+                        <!-- JS injected -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- [PAGE 2] -->
+        <div class="pdf-page pdf-page-break py-24">
+            <main class="max-w-6xl mx-auto px-16 space-y-28">
+                
+                <!-- Strategy Analysis Section -->
+                <section class="bg-white p-12 rounded-[40px] shadow-2xl border border-slate-100 flex flex-col lg:flex-row items-center gap-16">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-3xl font-black text-brand-slate mb-6 tracking-tight">리스크 진단:<br><span class="text-brand-blue">공백 없는 성공 설계</span></h3>
+                        <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                            자영업자는 근로자와 달리 <strong>산재나 퇴직금</strong>의 사각지대에 놓여 있습니다. <br><br>
+                            사업장 화재나 영업 배상 책임 같은 '외부 리스크'는 물론, 대표님의 건강 악화로 인한 '수익 중단 리스크'까지 입체적으로 방어해야 비로소 <strong>완전한 자립</strong>이 가능합니다.
+                        </p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                                <div class="w-10 h-10 rounded-full bg-brand-blue flex items-center justify-center text-white font-bold">1</div>
+                                <span class="text-brand-slate font-bold">사업장 화재 및 배상 책임 (물리적 방어)</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                <div class="w-10 h-10 rounded-full bg-brand-emerald flex items-center justify-center text-white font-bold">2</div>
+                                <span class="text-brand-slate font-bold">종합소득세 절세 및 노후 자금 (금융 전략)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 chart-wrapper">
+                        <canvas id="businessChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Value Proposition -->
+                <section>
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-black text-brand-slate mb-4">"오직 사장님만을 위한 가치"</h2>
+                        <div class="w-20 h-2 bg-brand-blue mx-auto rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">🏪</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">내 가게 안심 보호</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">화재, 풍수해는 물론 매장 내 사고로 인한 배상 청구까지 완벽히 대비하여 내 사업장을 철벽 수비합니다.</p>
+                        </div>
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">📉</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">똑똑한 절세 혜택</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">납입한 보험료의 비용 처리와 노란우산공제 등을 연계하여 사장님의 실질 소득을 높여드립니다.</p>
+                        </div>
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">💎</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">은퇴 후의 품격</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">평생 일만 해오신 사장님을 위해, 가게 문을 닫은 후에도 매달 월급처럼 나오는 연금 자산을 설계합니다.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Modern Footer -->
+            <footer class="bg-brand-slate text-white py-20 px-16 mt-32 rounded-t-[60px]">
+                <div class="max-w-4xl mx-auto text-center mb-16">
+                    <h3 class="text-3xl font-black mb-6">"사장님의 성공이 곧 우리의 자부심입니다"</h3>
+                    <p class="text-slate-400 text-lg opacity-80 leading-relaxed font-light">
+                        단순한 보험 가입을 넘어, 사장님의 지속 가능한 경영을 돕는 파트너가 되겠습니다.<br>
+                        힘든 현장의 고민을 누구보다 깊이 이해하고 해결책을 제시합니다.
+                    </p>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="max-w-[800px] mx-auto bg-white rounded-[32px] p-8 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+                    <div class="flex items-center gap-8 mb-6 md:mb-0">
+                        <div class="w-20 h-20 bg-slate-100 rounded-2xl p-1 overflow-hidden">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmws.samsunglife.com%3A8440%2F%23%2Fmain%2Fbc%2FTSSBC500M%3Fmdigitkey%3D0002221232" alt="QR" class="w-full h-full object-contain">
+                        </div>
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-brand-blue tracking-tighter mb-1 uppercase">Samsung Life | SME Specialist</p>
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-3xl font-black text-slate-900 leading-none">최세림</h4>
+                                <span class="bg-brand-emerald text-white text-[10px] font-bold px-2 py-0.5 rounded-full">BIZ PARTNER</span>
+                            </div>
+                            <p class="text-xl font-bold text-slate-700">010-7526-1826</p>
+                        </div>
+                    </div>
+                    <div class="text-right border-l-0 md:border-l-2 border-slate-100 pl-0 md:pl-8">
+                        <p class="text-sm font-bold text-slate-800 mb-2">바쁘신 사장님을 위한 1:1 방문 상담</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            매장 운영 시간에도 걱정 마세요.<br>
+                            <span class="text-brand-blue font-bold">원하시는 시간에 직접</span> 찾아뵙겠습니다.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-16 text-center pt-8 border-t border-slate-800 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
+                    Sustainable Business Support &copy; 2026 | Professional SME Consulting
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const businessData = [
+            {
+                title: '사업장 올인원 방어',
+                tag: 'Asset Protection',
+                desc: '화재/침수/도난 리스크 전가',
+                detail: '공장, 점포, 집기류의 화재 및 파손 시 발생하는 막대한 복구 비용을 지원받아 사업의 근간을 지킵니다.',
+                icon: '🏢'
+            },
+            {
+                title: '사장님 유급 휴가 보장',
+                tag: 'Life Care',
+                desc: '질병/상해 시 생활비 공백 차단',
+                detail: '사장님이 아파서 문을 닫는 동안 발생하는 임대료와 가족 생활비를 보장받아 마음 편히 치료에 전념할 수 있습니다.',
+                icon: '🏥'
+            },
+            {
+                title: '스마트 절세 주머니',
+                tag: 'Tax Efficiency',
+                desc: '종합소득세 공제 및 유동성 확보',
+                detail: '보험료 세액 공제와 노란우산공제 연계로 세금 부담을 줄이고, 긴급 자금 필요 시 대출 자원으로 활용 가능합니다.',
+                icon: '💰'
+            },
+            {
+                title: '배상 책임 세이프티',
+                tag: 'Liability',
+                desc: '매장 내 사고 및 법적 분쟁 방어',
+                detail: '식중독, 미끄러짐 사고 등 고객과 발생할 수 있는 사고의 치료비와 위자료를 대신 해결하여 사업주의 법적 책임을 덜어줍니다.',
+                icon: '⚖️'
+            }
+        ];
+
+        const container = document.getElementById('strategy-display-container');
+        businessData.forEach(item => {
+            container.innerHTML += `
+                <div class="step-card bg-white p-10 rounded-[32px] border border-slate-100 flex flex-col h-full shadow-sm">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="text-5xl">${item.icon}</div>
+                        <span class="text-brand-blue font-black text-[10px] uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">${item.tag}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-brand-slate mb-2 tracking-tight">${item.title}</h3>
+                        <p class="text-brand-emerald font-bold text-sm">${item.desc}</p>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mt-4 flex-grow">${item.detail}</p>
+                    <div class="mt-8 pt-6 border-t border-slate-50 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-tighter">
+                        상담 신청하기
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+            `;
+        });
+
+        function initChart() {
+            const ctx = document.getElementById('businessChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['화재/재산보호', '생활비방어', '절세효율', '배상책임', '노후준비'],
+                    datasets: [{
+                        label: '사장님 권장 플랜',
+                        data: [95, 90, 85, 98, 92],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                        borderColor: '#2563EB',
+                        pointBackgroundColor: '#2563EB',
+                        borderWidth: 3,
+                        pointRadius: 4
+                    }, {
+                        label: '미준비/일반보험',
+                        data: [40, 20, 10, 50, 30],
+                        backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                        borderColor: '#94A3B8',
+                        pointBackgroundColor: '#94A3B8',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    animation: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            grid: { color: '#E2E8F0' },
+                            angleLines: { color: '#E2E8F0' },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { display: false },
+                            pointLabels: { font: { family: 'Pretendard', size: 14, weight: '700' }, color: '#1E293B' }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Pretendard', size: 12, weight: '600' }, padding: 30 } }
+                    }
+                }
+            });
+        }
+
+        async function exportToPDF() {
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.innerHTML;
+            const captureArea = document.getElementById('capture-area');
+            
+            btn.disabled = true;
+            btn.innerText = "리포트 생성 중...";
+            captureArea.classList.add('pdf-capture-mode');
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const pages = document.querySelectorAll('.pdf-page');
+
+                for (let i = 0; i < pages.length; i++) {
+                    const canvas = await html2canvas(pages[i], {
+                        scale: 2,
+                        useCORS: true,
+                        logging: false,
+                        width: 1200,
+                        backgroundColor: '#F8FAFC'
+                    });
+
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = 210;
+                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                    if (i > 0) doc.addPage();
+                    doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                }
+
+                doc.save('SME_Business_Guard_Report.pdf');
+            } catch (error) {
+                console.error("PDF Export Error:", error);
+            } finally {
+                captureArea.classList.remove('pdf-capture-mode');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        window.onload = initChart;
+    </script>
+</body>
+</html>
