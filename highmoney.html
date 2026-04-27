@@ -3,33 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Asset Defense: 전문가의 명예와 자산을 지키는 설계</title>
+    <title>Wealth Guard & Legacy: 고소득자 자산 방어 전략 리포트</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- PDF Generation Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Noto Sans KR"', 'sans-serif'],
-                        serif: ['"Noto Serif KR"', 'serif'],
+                        sans: ['Pretendard', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
                     },
                     colors: {
-                        navy: {
-                            50: '#f0f4f8',
-                            100: '#d9e2ec',
-                            800: '#102a43',
-                            900: '#061626',
-                        },
-                        gold: {
-                            500: '#d4af37',
-                            600: '#c5a059',
-                            700: '#b08d4a'
+                        brand: {
+                            gold: '#B68D40',
+                            navy: '#0F172A',
+                            slate: '#1E293B',
+                            bronze: '#78350F'
                         }
                     }
                 }
@@ -38,88 +32,101 @@
     </script>
     <style>
         body {
-            background-color: #f8fafc;
-            color: #1e293b;
-            scroll-behavior: smooth;
+            background-color: #F8FAFC;
+            color: #1E293B;
+            word-break: keep-all;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-            height: 420px;
+        .step-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 0px solid #B68D40;
         }
-        .strategy-card {
-            border-top: 4px solid #c5a059;
-            transition: all 0.3s ease;
-        }
-        .strategy-card:hover {
+        .step-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            border-left-width: 8px;
         }
-        .strategy-box {
-            background: linear-gradient(135deg, #102a43 0%, #061626 100%);
-            color: #ffffff;
+        .gradient-text {
+            background: linear-gradient(90deg, #B68D40, #78350F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #B68D40; 
         }
         
+        .pdf-capture-mode .gradient-text {
+            background: none !important;
+            -webkit-text-fill-color: #B68D40 !important;
+            color: #B68D40 !important;
+        }
+        
+        .pdf-capture-mode .no-pdf {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 380px;
+            width: 100%;
+        }
         .pdf-page {
             width: 1200px;
             margin: 0 auto;
-            background-color: #f8fafc;
+            background-color: #F8FAFC;
             position: relative;
             box-sizing: border-box;
         }
-
-        #download-btn {
-            transition: all 0.3s ease;
-            letter-spacing: 0.05em;
-        }
-
         @media screen {
             .pdf-page-break {
-                border-top: 1px solid #e2e8f0;
-                margin-top: 5rem;
-                padding-top: 5rem;
+                margin-top: 4rem;
+                padding-top: 4rem;
+                border-top: 1px dashed #CBD5E1;
             }
         }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen">
+<body class="antialiased">
 
     <div id="capture-area">
         <!-- [PAGE 1] -->
         <div class="pdf-page pb-24">
-            <!-- Header Section -->
-            <header class="w-full bg-navy-900 text-white py-28 px-16 border-b-[12px] border-gold-600 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">
-                    <svg viewBox="0 0 100 100" fill="currentColor"><path d="M0 0 L100 0 L100 100 Z"/></svg>
-                </div>
-                <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
-                    <div class="z-10">
-                        <h2 class="text-gold-500 font-bold tracking-[0.3em] text-xs uppercase mb-6 flex items-center gap-2">
-                            <span class="w-8 h-[1px] bg-gold-500"></span>
-                            Bespoke Wealth & Risk Defense
-                        </h2>
-                        <h1 class="text-5xl md:text-7xl font-serif font-bold leading-[1.1] mb-10">전문가적 성취를<br><span class="text-gold-500">영원한 자산 가치로</span></h1>
-                        <p class="text-navy-100 text-xl md:text-2xl font-light max-w-3xl leading-relaxed opacity-90">
-                            귀하의 고도화된 지적 자산이 중단 없이 수익을 창출하고,<br>
-                            어떤 법적·세무적 변수에도 흔들리지 않는 <strong>Strategic Fortress</strong>를 구축합니다.
-                        </p>
+            <!-- Hero Header -->
+            <header class="w-full bg-brand-navy text-white pt-32 pb-24 px-16 rounded-b-[60px] relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-brand-gold blur-[150px] opacity-20"></div>
+                <div class="absolute bottom-0 left-0 w-80 h-80 bg-brand-bronze blur-[150px] opacity-10"></div>
+                
+                <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="inline-block px-4 py-1 rounded-full bg-white/10 text-white text-xs font-bold tracking-[0.2em] mb-8 uppercase border border-white/20">
+                        Wealth Management & Estate Planning
                     </div>
-                    <button id="download-btn" onclick="exportToPDF()" class="bg-gold-600 hover:bg-gold-700 text-navy-900 font-black py-4 px-8 rounded-sm shadow-2xl flex items-center gap-3 no-pdf z-10 transition-all uppercase text-sm">
-                        Executive Summary PDF
-                    </button>
+                    <h1 class="text-6xl md:text-8xl font-black mb-10 leading-none tracking-tight">
+                        PROTECT<br>
+                        <span class="gradient-text">YOUR LEGACY</span>
+                    </h1>
+                    <p class="text-slate-400 text-xl md:text-2xl font-light max-w-3xl leading-relaxed">
+                        최고의 전문성으로 일군 귀하의 거대한 자산,<br>
+                        세금과 리스크라는 중력에도 무너지지 않는 <strong>부의 요새</strong>를 구축해 드립니다.
+                    </p>
+                    
+                    <div class="mt-12 flex flex-wrap gap-4 no-pdf">
+                        <button id="download-btn" onclick="exportToPDF()" class="bg-white text-brand-navy font-bold py-4 px-10 rounded-2xl shadow-2xl hover:bg-brand-gold hover:text-white transition-all flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            자산 방어 전략 리포트 PDF 저장
+                        </button>
+                    </div>
                 </div>
             </header>
 
-            <main class="max-w-6xl mx-auto px-16 pt-20">
+            <main class="max-w-6xl mx-auto px-16 pt-24">
                 <section>
                     <div class="mb-16">
-                        <h2 class="text-4xl font-serif font-bold text-navy-900">01. 전문직 특화 자산 방어 지도</h2>
-                        <p class="text-slate-500 mt-4 text-xl font-light">고소득 전문직이 직면하는 4대 핵심 리스크에 대한 마스터 플랜입니다.</p>
+                        <h2 class="text-4xl font-black text-brand-slate mb-4 tracking-tight">01. VVIP를 위한 4대 자산 보호 안전망</h2>
+                        <p class="text-slate-500 text-lg">고소득일수록 자산의 증식보다 '방어'와 '이전'이 핵심입니다.</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10" id="strategy-display-container">
-                        <!-- Data injected by JS -->
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="strategy-display-container">
+                        <!-- JS injected -->
                     </div>
                 </section>
             </main>
@@ -127,215 +134,168 @@
 
         <!-- [PAGE 2] -->
         <div class="pdf-page pdf-page-break py-24">
-            <main class="max-w-6xl mx-auto px-16 space-y-32">
-                <!-- Data Comparison (Radar Chart) -->
-                <section class="bg-white p-16 rounded-sm shadow-2xl border-t-8 border-navy-900">
-                    <div class="flex flex-col lg:flex-row items-center gap-20">
-                        <div class="lg:w-5/12">
-                            <h2 class="text-4xl font-serif font-bold text-navy-900 mb-8 leading-tight">효율적인 자산 방어의<br>정량적 지표</h2>
-                            <p class="text-slate-600 leading-relaxed mb-10 text-lg font-light">
-                                전문직의 자산 관리는 '얼마를 버느냐'보다 <strong>'얼마를 지키고 어떻게 이전하느냐'</strong>의 싸움입니다. <br><br>
-                                보험 솔루션은 단순 금융상품을 넘어 <strong>법률적 압류 방지, 상속 재원 마련, 세무 비용의 자산화</strong>를 실현하는 유일한 도구입니다.
-                            </p>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-4 p-4 bg-navy-50 rounded-lg">
-                                    <div class="w-4 h-4 rounded-full bg-gold-600"></div>
-                                    <span class="text-base font-bold text-navy-900 uppercase">Expert Defense: 세무/법적 통합 리스크 전가</span>
-                                </div>
-                                <div class="flex items-center gap-4 p-4 border border-slate-100 rounded-lg">
-                                    <div class="w-4 h-4 rounded-full bg-slate-300"></div>
-                                    <span class="text-base font-medium text-slate-400">Standard Asset: 시장 변동 및 세무 리스크 노출</span>
-                                </div>
+            <main class="max-w-6xl mx-auto px-16 space-y-28">
+                
+                <!-- Strategy Analysis Section -->
+                <section class="bg-white p-12 rounded-[40px] shadow-2xl border border-slate-100 flex flex-col lg:flex-row items-center gap-16">
+                    <div class="lg:w-1/2">
+                        <h3 class="text-3xl font-black text-brand-slate mb-6 tracking-tight">리스크 진단:<br><span class="text-brand-gold">공백 없는 부의 계승</span></h3>
+                        <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                            고소득 전문직 및 자산가는 <strong>높은 소득세율과 상속세</strong>라는 거대한 중력에 직면해 있습니다. <br><br>
+                            갑작스러운 사고로 인한 '소득 중단'은 가계의 수준을 위협하고, 준비되지 않은 '상속'은 평생 일군 자산을 정부와 나누게 만듭니다. 입체적인 방어만이 <strong>세대를 잇는 부</strong>를 완성합니다.
+                        </p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="flex items-center gap-4 p-4 bg-orange-50 rounded-2xl border border-orange-100">
+                                <div class="w-10 h-10 rounded-full bg-brand-gold flex items-center justify-center text-white font-bold">1</div>
+                                <span class="text-brand-slate font-bold">상속세 재원 마련 및 자산 이전 (Legacy)</span>
+                            </div>
+                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <div class="w-10 h-10 rounded-full bg-brand-slate flex items-center justify-center text-white font-bold">2</div>
+                                <span class="text-brand-slate font-bold">절세 플래닝 및 금융 소득 관리 (Tax)</span>
                             </div>
                         </div>
-                        <div class="lg:w-7/12 chart-container">
-                            <canvas id="solutionChart"></canvas>
-                        </div>
+                    </div>
+                    <div class="lg:w-1/2 chart-wrapper">
+                        <canvas id="businessChart"></canvas>
                     </div>
                 </section>
 
-                <!-- Core Pillars -->
+                <!-- Value Proposition -->
                 <section>
-                    <div class="mb-16 border-l-4 border-gold-600 pl-8">
-                        <h2 class="text-4xl font-serif font-bold text-navy-900">02. 전문가의 생애주기별 3대 핵심 과제</h2>
-                        <p class="text-slate-500 mt-2 text-lg">성장기부터 은퇴기까지, 자산의 성격에 맞는 최적의 전략을 제안합니다.</p>
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-black text-brand-slate mb-4">"귀하의 가업과 품격을 위하여"</h2>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <!-- Pillar 1 -->
-                        <div class="bg-white p-10 shadow-lg border border-slate-100 relative group">
-                            <div class="text-gold-600 text-xs font-bold mb-6 uppercase tracking-[0.2em]">Risk Neutralization</div>
-                            <h3 class="text-2xl font-bold text-navy-900 mb-6 font-serif">면책과 소득 보전</h3>
-                            <p class="text-slate-600 text-base leading-relaxed mb-8">고소득 전문가일수록 사고 시 발생하는 소득 손실액이 막대합니다. 이를 1:1로 매칭하는 고액 소득 보전 구조를 설계합니다.</p>
-                            <ul class="space-y-4 text-sm font-bold text-navy-800">
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    전문인 배상 책임 리스크 헷지
-                                </li>
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    장기 휴업 시 고정비 지원 체계
-                                </li>
-                            </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">🏛️</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">자산의 요새화</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">법적 분쟁, 예상치 못한 부채, 그리고 압도적인 세금으로부터 귀하의 핵심 자산을 격리하여 완벽히 보호합니다.</p>
                         </div>
-                        <!-- Pillar 2 -->
-                        <div class="bg-white p-10 shadow-lg border border-slate-100 relative group">
-                            <div class="text-gold-600 text-xs font-bold mb-6 uppercase tracking-[0.2em]">Tax-Efficient Wealth</div>
-                            <h3 class="text-2xl font-bold text-navy-900 mb-6 font-serif">자산 가치 극대화</h3>
-                            <p class="text-slate-600 text-base leading-relaxed mb-8">종합소득세율이 높은 전문직에게 '비과세'는 단순한 혜택이 아닌 생존 전략입니다. 과세 표준을 낮추는 스마트 자산을 구축합니다.</p>
-                            <ul class="space-y-4 text-sm font-bold text-navy-800">
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    금융소득 종합과세 제외 솔루션
-                                </li>
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    합법적 증여세 절감 구조화 (GI)
-                                </li>
-                            </ul>
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">📜</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">명예로운 계승</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">유동성 있는 상속세 재원을 사전에 마련하여, 다음 세대가 자산을 매각하지 않고 그대로 물려받게 합니다.</p>
                         </div>
-                        <!-- Pillar 3 -->
-                        <div class="bg-white p-10 shadow-lg border border-slate-100 relative group">
-                            <div class="text-gold-600 text-xs font-bold mb-6 uppercase tracking-[0.2em]">Honorary Exit</div>
-                            <h3 class="text-2xl font-bold text-navy-900 mb-6 font-serif">명예로운 가업 승계</h3>
-                            <p class="text-slate-600 text-base leading-relaxed mb-8">은퇴 후에도 라이프스타일이 유지되어야 합니다. 상속세 재원을 종신보험으로 완벽히 매칭하여 자녀의 세금 부담을 Zero화합니다.</p>
-                            <ul class="space-y-4 text-sm font-bold text-navy-800">
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    상속세 납부 재원 1:1 확정 전략
-                                </li>
-                                <li class="flex items-center gap-3">
-                                    <svg class="w-4 h-4 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                    종신 연금화를 통한 안정적 Cash-flow
-                                </li>
-                            </ul>
+                        <div class="bg-slate-50 p-10 rounded-3xl border border-slate-200">
+                            <div class="text-4xl mb-6">👔</div>
+                            <h4 class="text-xl font-bold text-brand-slate mb-4">변함없는 라이프스타일</h4>
+                            <p class="text-slate-600 text-sm leading-relaxed">신체적 리스크나 은퇴 후에도 현재의 고품격 라이프스타일이 유지되도록 현금 흐름을 철저히 설계합니다.</p>
                         </div>
                     </div>
                 </section>
             </main>
 
-            <!-- Footer Section -->
-            <footer class="bg-navy-900 text-white py-24 px-16 mt-32 border-t border-gold-600/30">
+            <!-- Modern Footer -->
+            <footer class="bg-brand-navy text-white py-20 px-16 mt-32 rounded-t-[60px]">
                 <div class="max-w-4xl mx-auto text-center mb-16">
-                    <h3 class="text-3xl font-serif mb-8 text-gold-500">"전문가의 땀방울을 가장 귀하게 여깁니다"</h3>
-                    <p class="text-navy-100 text-lg opacity-80 mb-8 leading-relaxed font-light">
-                        귀하가 전문 업무에만 온전히 몰두할 수 있도록, 모든 배후의 리스크를 관리합니다.<br>
-                        우리는 귀하의 명예를 보존하는 가장 헌신적인 <strong>Wealth Steward</strong>입니다.
+                    <h3 class="text-3xl font-black mb-6">"성공 그 이상의 가치, 부의 영속성을 약속합니다"</h3>
+                    <p class="text-slate-400 text-lg opacity-80 leading-relaxed font-light">
+                        우리는 단순히 금융 상품을 제안하지 않습니다. 귀하가 일군 제국이 흔들리지 않도록<br>
+                        가장 정교한 법률, 세무적 인사이트를 결합한 리스크 관리 파트너가 되겠습니다.
                     </p>
                 </div>
 
-                <!-- Consultant Business Card -->
-                <div class="max-w-[950px] mx-auto flex flex-col sm:flex-row justify-between items-center bg-[#ffffff] rounded-sm p-10 shadow-2xl relative">
-                    <div class="flex items-center gap-10">
-                        <div class="w-24 h-24 bg-navy-50 border border-slate-100 rounded-sm flex items-center justify-center p-2 shadow-inner">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmws.samsunglife.com%3A8440%2F%23%2Fmain%2Fbc%2FTSSBC500M%3Fmdigitkey%3D0002221232" 
-                                 alt="QR" class="w-full h-full object-contain grayscale">
+                <!-- Profile Card -->
+                <div class="max-w-[800px] mx-auto bg-white rounded-[32px] p-8 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+                    <div class="flex items-center gap-8 mb-6 md:mb-0">
+                        <div class="w-20 h-20 bg-slate-100 rounded-2xl p-1 overflow-hidden">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmws.samsunglife.com%3A8440%2F%23%2Fmain%2Fbc%2FTSSBC500M%3Fmdigitkey%3D0002221232" alt="QR" class="w-full h-full object-contain">
                         </div>
-                        <div class="space-y-2 text-left">
-                            <p class="text-xs text-gold-700 font-bold tracking-widest uppercase mb-1">Samsung Life | Private Client Group</p>
-                            <div class="flex items-center gap-4">
-                                <h3 class="text-4xl font-serif font-black text-slate-900 leading-none">최세림</h3>
-                                <span class="px-3 py-1 bg-navy-900 text-gold-500 text-[10px] font-black tracking-tighter rounded-sm">VVIP SPECIALIST</span>
+                        <div class="text-left">
+                            <p class="text-xs font-bold text-brand-gold tracking-tighter mb-1 uppercase">Samsung Life | Heritage Specialist</p>
+                            <div class="flex items-center gap-2 mb-1">
+                                <h4 class="text-3xl font-black text-slate-900 leading-none">최세림</h4>
+                                <span class="bg-brand-gold text-white text-[10px] font-bold px-2 py-0.5 rounded-full">PRIVATE BANKER</span>
                             </div>
-                            <p class="text-2xl font-black text-slate-800 tracking-tight">010-7526-1826</p>
+                            <p class="text-xl font-bold text-slate-700">010-7526-1826</p>
                         </div>
                     </div>
-                    
-                    <div class="text-right border-l-[1px] border-slate-200 pl-12 mt-10 sm:mt-0 hidden sm:block">
-                        <p class="text-xs font-black text-navy-900 tracking-[0.2em] mb-3 uppercase">Strategic Integrity</p>
-                        <p class="text-sm text-slate-500 font-medium leading-relaxed">
-                            데이터에 근거한 정밀한 분석과<br>
-                            <span class="text-navy-900 font-bold">프라이빗한 밀착 케어</span>를 약속드립니다.
+                    <div class="text-right border-l-0 md:border-l-2 border-slate-100 pl-0 md:pl-8">
+                        <p class="text-sm font-bold text-slate-800 mb-2">하이엔드 자산 관리 1:1 컨설팅</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">
+                            귀하의 프라이버시를 최우선으로 합니다.<br>
+                            <span class="text-brand-gold font-bold">편안한 장소와 시간으로</span> 직접 방문하겠습니다.
                         </p>
                     </div>
                 </div>
 
-                <div class="mt-16 text-center pt-10 border-t border-navy-800 text-[11px] uppercase tracking-[0.5em] font-bold text-white/30">
-                    Professional Private Asset Defense &copy; 2026 | Confidential Strategy Report
+                <div class="mt-16 text-center pt-8 border-t border-slate-800 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
+                    Wealth Management & Legacy &copy; 2026 | Private Heritage Consulting
                 </div>
             </footer>
         </div>
     </div>
 
     <script>
-        const professionalData = [
+        const businessData = [
             {
-                category: '배상 책임 주권',
-                want: '업무적 실수가 삶의 위기로 번지지 않도록',
-                need: '직업적 과실 배상 리스크의 완벽 전가',
-                solution: '전문인 특화 리스크 실드(Shield)',
-                strategy: '예상치 못한 의료/법률적 사고 시 발생하는 고액 배상금과 소송 비용을 보험으로 해결하여, 개인의 고유 자산이 압류되거나 훼손되는 것을 원천 차단합니다.'
+                title: '상속세 골든타임 확보',
+                tag: 'Estate Planning',
+                desc: '현금 자산 확보 및 세원 마련',
+                detail: '부동산 위주의 자산 구조에서 가장 취약한 유동성 문제를 해결합니다. 상속 시점에 즉시 현금화되는 재원으로 가족의 자산을 지킵니다.',
+                icon: '🏰'
             },
             {
-                category: '세무 효율성',
-                want: '노력의 결실을 온전히 향유하는 삶',
-                need: '높은 과세 표준에 대한 전략적 대응',
-                solution: '비과세 자산 포트폴리오 다각화',
-                strategy: '연간 금융소득 종합과세 한도를 고려하여, 중장기적으로 세금 부담이 없는 확정 금리형 비과세 계좌를 구축함으로써 실질 수익률을 극대화합니다.'
+                title: '절세 포트폴리오 최적화',
+                tag: 'Tax Strategy',
+                desc: '금융소득 종합과세 및 비과세 전략',
+                detail: '고율의 소득세 부담을 줄이고 비과세 및 저율과세 계좌를 활용하여, 실질적인 세후 수익률을 극대화하는 자산 배분을 시행합니다.',
+                icon: '📉'
             },
             {
-                category: '가문 자산 승계',
-                need: '징벌적 상속세로부터 가업 보존',
-                want: '다음 세대에게 명예로운 부의 이전',
-                solution: '상속세 재원 매칭 종신 솔루션',
-                strategy: '부동산이나 주식 비중이 높은 자산 구조에서 발생할 수 있는 현금 흐름의 경색을 방지하기 위해, 사망 보험금을 납세 재원으로 활용하여 온전한 승계를 실현합니다.'
+                title: '휴먼 캐피탈 프로텍션',
+                tag: 'Income Security',
+                desc: '전문직 고소득 중단 리스크 방어',
+                detail: '귀하 자체가 곧 기업인 고소득 전문직의 경우, 신체적 리스크는 곧 수익 제로를 의미합니다. 어떤 상황에도 가족의 삶은 변함없어야 합니다.',
+                icon: '💎'
             },
             {
-                category: '커리어 안전장치',
-                need: '신체적·정신적 한계로 인한 소득 중단 방지',
-                want: '어떤 상황에서도 유지되는 품격',
-                solution: '고액 소득 보전(Income Protection)',
-                strategy: '질병이나 사고로 인해 더 이상 전문 업무를 수행할 수 없는 상황이 닥쳤을 때, 기존 소득의 80% 이상을 대체할 수 있는 강력한 현금 흐름을 준비합니다.'
+                title: '프라이빗 부의 이전',
+                tag: 'Succession',
+                desc: '자녀 증여 및 조기 증여 플랜',
+                detail: '자산 가치 상승 전 낮은 평가액으로 부를 이전하여 추후 발생할 막대한 세금을 원천적으로 차단하는 중장기 증여 시나리오를 제공합니다.',
+                icon: '🤝'
             }
         ];
 
         const container = document.getElementById('strategy-display-container');
-        professionalData.forEach(item => {
+        businessData.forEach(item => {
             container.innerHTML += `
-                <div class="strategy-card bg-white p-10 shadow-lg flex flex-col h-full group">
-                    <div class="flex justify-between items-center mb-8">
-                        <span class="text-gold-700 font-black text-[11px] uppercase tracking-[0.2em]">${item.category}</span>
-                        <svg class="w-6 h-6 text-gold-500 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04kM12 21.48l.348-.07a12.32 12.32 0 005.434-2.32 12.32 12.32 0 004.387-5.456M12 21.48l-.348-.07a12.32 12.32 0 01-5.434-2.32 12.32 12.32 0 01-4.387-5.456"></path></svg>
+                <div class="step-card bg-white p-10 rounded-[32px] border border-slate-100 flex flex-col h-full shadow-sm">
+                    <div class="flex justify-between items-start mb-8">
+                        <div class="text-5xl">${item.icon}</div>
+                        <span class="text-brand-gold font-black text-[10px] uppercase tracking-widest bg-orange-50 px-3 py-1 rounded-full">${item.tag}</span>
                     </div>
-                    <div class="mb-6">
-                        <p class="text-[10px] text-navy-800 opacity-50 uppercase font-black mb-2 tracking-widest">Psychological Goal</p>
-                        <h3 class="text-2xl font-serif font-bold text-navy-900 leading-tight">"${item.want}"</h3>
+                    <div class="mb-4">
+                        <h3 class="text-2xl font-black text-brand-slate mb-2 tracking-tight">${item.title}</h3>
+                        <p class="text-brand-gold font-bold text-sm">${item.desc}</p>
                     </div>
-                    <div class="mb-8">
-                        <p class="text-[10px] text-navy-800 opacity-50 uppercase font-black mb-2 tracking-widest">Strategic Barrier</p>
-                        <p class="text-slate-700 font-medium text-lg">${item.need}</p>
-                    </div>
-                    <div class="strategy-box p-6 mt-auto">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="bg-gold-600 text-navy-900 text-[10px] font-black px-2 py-0.5">ELITE SOLUTION</span>
-                            <span class="text-gold-500 font-bold text-sm tracking-tight">${item.solution}</span>
-                        </div>
-                        <p class="text-navy-100 text-sm leading-relaxed opacity-90">${item.strategy}</p>
-                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mt-4 flex-grow">${item.detail}</p>
                 </div>
             `;
         });
 
         function initChart() {
-            const ctx = document.getElementById('solutionChart').getContext('2d');
+            const ctx = document.getElementById('businessChart').getContext('2d');
             new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['세무 효율성', '법적 방어력', '자산 승계력', '소득 대체율', '유동성 확보'],
+                    labels: ['상속/증여재원', '소득세절세', '비과세비중', '소득중단방어', '자산유동성'],
                     datasets: [{
-                        label: '전문직 통합 관리 솔루션',
-                        data: [96, 98, 95, 92, 94],
-                        backgroundColor: 'rgba(197, 160, 89, 0.4)',
-                        borderColor: '#c5a059',
-                        pointBackgroundColor: '#102a43',
+                        label: 'VVIP 최적화 상태',
+                        data: [98, 92, 95, 90, 88],
+                        backgroundColor: 'rgba(182, 141, 64, 0.2)',
+                        borderColor: '#B68D40',
+                        pointBackgroundColor: '#B68D40',
                         borderWidth: 3,
                         pointRadius: 4
                     }, {
-                        label: '개별 분산 투자',
-                        data: [45, 20, 35, 40, 60],
-                        backgroundColor: 'rgba(51, 78, 104, 0.1)',
-                        borderColor: '#334e68',
-                        pointBackgroundColor: '#334e68',
+                        label: '일반 자산가 평균',
+                        data: [45, 30, 20, 40, 50],
+                        backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                        borderColor: '#94A3B8',
+                        pointBackgroundColor: '#94A3B8',
                         borderWidth: 1,
                         borderDash: [5, 5]
                     }]
@@ -346,16 +306,16 @@
                     maintainAspectRatio: false,
                     scales: {
                         r: {
-                            grid: { color: '#e2e8f0' },
-                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#E2E8F0' },
+                            angleLines: { color: '#E2E8F0' },
                             suggestedMin: 0,
                             suggestedMax: 100,
                             ticks: { display: false },
-                            pointLabels: { font: { family: 'Noto Sans KR', size: 15, weight: '700' }, color: '#061626' }
+                            pointLabels: { font: { family: 'Pretendard', size: 14, weight: '700' }, color: '#1E293B' }
                         }
                     },
                     plugins: {
-                        legend: { position: 'bottom', labels: { font: { family: 'Noto Sans KR', size: 13, weight: '500' }, padding: 30 } }
+                        legend: { position: 'bottom', labels: { font: { family: 'Pretendard', size: 12, weight: '600' }, padding: 30 } }
                     }
                 }
             });
@@ -364,8 +324,11 @@
         async function exportToPDF() {
             const btn = document.getElementById('download-btn');
             const originalText = btn.innerHTML;
+            const captureArea = document.getElementById('capture-area');
+            
             btn.disabled = true;
-            btn.innerText = "GENERATING REPORT...";
+            btn.innerText = "리포트 생성 중...";
+            captureArea.classList.add('pdf-capture-mode');
 
             try {
                 const { jsPDF } = window.jspdf;
@@ -378,10 +341,7 @@
                         useCORS: true,
                         logging: false,
                         width: 1200,
-                        onclone: (clonedDoc) => {
-                            const btnInClone = clonedDoc.getElementById('download-btn');
-                            if (btnInClone) btnInClone.style.display = 'none';
-                        }
+                        backgroundColor: '#F8FAFC'
                     });
 
                     const imgData = canvas.toDataURL('image/png');
@@ -392,11 +352,11 @@
                     doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
                 }
 
-                doc.save('Professional_Elite_Asset_Defense_2026.pdf');
+                doc.save('Wealth_Guard_Strategic_Report.pdf');
             } catch (error) {
                 console.error("PDF Export Error:", error);
-                alert("리포트 생성 중 오류가 발생했습니다.");
             } finally {
+                captureArea.classList.remove('pdf-capture-mode');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }
